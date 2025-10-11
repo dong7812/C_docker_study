@@ -88,7 +88,52 @@ int main()
 
 int moveMaxToFront(ListNode **ptrHead)
 {
-    /* add your code here */
+	LinkedList tmp;
+	ListNode *tmp_tail = NULL;
+
+	ListNode *cur;
+
+	int n, idx, pos;
+	
+	idx = 0;
+	pos = 0;
+
+	tmp.size = 0;
+	tmp.head = NULL;
+	
+	if(*ptrHead == NULL)
+		return -1;
+
+	cur = (*ptrHead);
+	n = cur->item;
+
+	while (cur != NULL) {
+		ListNode *node = malloc(sizeof(ListNode));
+		node->item = cur->item;
+		node->next = NULL;
+
+		if (tmp.head == NULL) {        // 첫 노드
+			tmp.head = node;
+			tmp_tail = node;
+		} else {                       // 그 이후는 tail 뒤에 O(1)로 붙임
+			tmp_tail->next = node;
+			tmp_tail = node;
+		}
+		tmp.size++;
+
+		if(n < cur->item){
+			n = cur->item;
+			idx = pos;
+		}
+		pos++;
+    	cur = cur->next;
+	}
+
+	removeNode(&tmp, idx);
+	insertNode(&tmp, 0, n);
+	
+	*ptrHead = tmp.head;
+	return 1;
 }
 
 //////////////////////////////////////////////////////////////////////////////////
