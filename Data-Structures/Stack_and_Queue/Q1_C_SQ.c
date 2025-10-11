@@ -120,8 +120,12 @@ void createQueueFromLinkedList(LinkedList *ll, Queue *q)
 	// for(int i =0; i < ll->size; i++){
 	// 	enqueue(q, findNode(ll, i)->item);
 	// }
+	if (q != NULL){
+		removeAllItemsFromQueue(&q);
+	}
 
 	ListNode *temp = ll->head;
+
 	while(temp !=NULL){
 		enqueue(q, temp->item);
 		temp = temp->next;
