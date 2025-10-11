@@ -11,6 +11,8 @@ Purpose: Implementing the required functions for Question 1 */
 
 //////////////////////////////////////////////////////////////////////////////////
 
+// 구조체 선언
+// node는 item(value)와 다음 노드를 가르키는 pointer로 구성
 typedef struct _listnode{
 	int item;
 	struct _listnode *next;
@@ -90,7 +92,48 @@ int main()
 
 int insertSortedLL(LinkedList *ll, int item)
 {
-	/* add your code here */
+    if (ll == NULL) {
+        return -1;
+    }
+
+    ListNode *pre = NULL;
+    ListNode *cur = ll->head;
+    int index = 0;  // 삽입할 위치를 추적할 변수
+
+    // 이미 존재하는 값이면 삽입 X
+    while (cur != NULL) {
+        if (cur->item == item) {
+            return -1;  // 중복이면 실패
+        }
+        if (cur->item > item) {
+            break; // 삽입 위치 찾음
+        }
+        pre = cur;
+        cur = cur->next;
+        index++;
+    }
+
+    // 새 노드 생성
+    ListNode *node = (ListNode *)malloc(sizeof(ListNode));
+
+    node->item = item;
+    node->next = NULL;
+
+    // 삽입 위치에 따라 연결
+    if (pre == NULL) {
+        // 맨 앞(head)에 삽입
+        node->next = ll->head;
+        ll->head = node;
+    } else {
+        // 가운데나 끝 삽입
+        node->next = pre->next;
+        pre->next = node;
+    }
+
+    ll->size++;
+
+    // 삽입된 index 리턴
+    return index;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////
