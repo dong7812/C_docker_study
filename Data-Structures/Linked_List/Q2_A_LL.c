@@ -99,12 +99,102 @@ int main()
 	return 0;
 }
 
-//////////////////////////////////////////////////////////////////////////////////
-
 void alternateMergeLinkedList(LinkedList *ll1, LinkedList *ll2)
 {
-    /* add your code here */
+    if (ll1 == NULL || ll2 == NULL) return;                 // ✨ 추가
+    if (ll2->head == NULL) return;                          // ✨ 추가 (ll2 비어있으면 할 일 없음)
+
+    LinkedList temp;
+    temp.head = NULL;
+    temp.size = 0;
+
+    int size1 = ll1->size;
+    int size2 = ll2->size;
+    int k = (size1 < size2) ? size1 : size2;  // min(size1, size2)
+
+    // 공통 루프: 교차로 k쌍 삽입
+    for (int i = 0; i < k; i++) {
+        int base = 2 * i; // temp에서 (a,b) 쌍이 차지할 시작 인덱스
+        insertNode(&temp, base,     findNode(ll1, i)->item);
+        insertNode(&temp, base + 1, findNode(ll2, i)->item);
+    }
+
+    // ll1이 더 길면 남은 ll1을 뒤에 붙임
+    for (int i = k; i < size1; i++) {
+        insertNode(&temp, temp.size, findNode(ll1, i)->item); // append
+    }
+
+    // 최종 대치 (ll1 <- temp)
+    ll1->head = temp.head;
+    ll1->size = temp.size;
+
+    //  여기부터 최소 수정 포인트: ll2를 문제 요구대로 정리
+    if (size1 >= size2) {
+        // ll1이 더 길거나 같으면 ll2는 비워야 함
+        ll2->head = NULL;
+        ll2->size = 0;
+    } else {
+        // ll2가 더 길면, 앞의 k개는 사용됐고 나머지 tail만 남김
+        // ll2의 head를 k번째 노드로 당김
+        ListNode *newHead = findNode(ll2, k);    // k는 0..size2-1 범위에서 안전
+        ll2->head = newHead;
+        ll2->size = size2 - k;                   // 남은 개수로 사이즈 갱신
+    }
 }
+
+//////////////////////////////////////////////////////////////////////////////////
+
+// void alternateMergeLinkedList(LinkedList *ll1, LinkedList *ll2)
+// {
+// 	int j;
+// 	LinkedList temp;
+// 	temp.head = NULL;
+// 	temp.size = 0;
+
+// 	if (ll2 == NULL){
+// 		return;
+// 	}
+// 	else
+// 	{
+// 		if (ll1->size == ll2->size){
+// 			for(int i = 0; i < ll1->size; i++){
+// 			j = insertNode(&temp, i, findNode(ll1, i)->item);
+// 			j = insertNode(&temp, i+1, findNode(ll2, i)->item);
+// 			}
+// 			ll1->head = temp.head;
+// 			ll1->size = temp.size;
+
+// 			ll2->head = NULL;
+// 			ll2->size = 0;
+// 		}
+// 		else if(ll1->size > ll2->size){
+// 			for(int i = 0; i < ll2->size; i++){
+// 				j = insertNode(&temp, i, findNode(ll1, i)->item);
+// 				j = insertNode(&temp, i+1, findNode(ll2, i)->item);
+// 			}
+
+// 			for(int i = ll2->size; i<ll1->size; i++){
+// 				j = insertNode(&temp, i, findNode(ll1, i)->item);
+// 			}
+// 			ll1->head = temp.head;
+// 			ll1->size = temp.size;
+
+// 			ll2->head = NULL;
+// 			ll2->size = 0;
+// 		}
+// 		else{
+// 			for(int i = 0; i < ll1->size; i++){
+// 				j = insertNode(&temp, i, findNode(ll1, i)->item);
+// 				j = insertNode(&temp, i+1, findNode(ll2, i)->item);
+
+// 				removeNode(ll2, i);
+// 			}
+
+// 			ll1->head = temp.head;
+// 			ll1->size = temp.size;
+// 		}
+// 	}
+// }
 
 ///////////////////////////////////////////////////////////////////////////////////
 
