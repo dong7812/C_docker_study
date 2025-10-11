@@ -86,9 +86,68 @@ int main()
 
 void moveOddItemsToBack(LinkedList *ll)
 {
-	/* add your code here */
+    if (!ll || !ll->head) return;
+
+    ListNode *cur  = ll->head;
+    ListNode *prev = NULL;
+    ListNode *next = NULL;
+
+    ListNode *odd_head = NULL;
+    ListNode *odd_tail = NULL;
+
+    while (cur != NULL) {
+        next = cur->next; // 먼저 백업
+
+		// 홀수 인지 판단
+        if (cur->item % 2 == 1) {
+			// 홀수 잊던 짝수가 있었는지 판단
+            if (prev == NULL) {
+				ll->head = next;
+			}else{
+				// 짝수가 있었다면 해당 짝수의 next pointer를 연결
+				prev->next = next;
+			}
+			// 현재 홀수인 node를 고립시키기
+            cur->next = NULL;
+            if (odd_head == NULL) {
+				odd_head = cur;
+				odd_tail = cur;
+			}else {
+				 odd_tail->next = cur;
+				 odd_tail = cur;
+			}
+        } else {
+            prev = cur;
+        }
+
+        cur = next;
+    }
+
+    // odd가 있으면 뒤에 붙이기
+    if (odd_head != NULL) {
+        if (prev == NULL){
+			ll->head = odd_head;   // 전부 홀수였던 경우
+		}
+        else{
+			prev->next = odd_head; // 마지막 짝수 뒤에 odd 체인 연결
+		}
+    }
 }
 
+// ListNode *node = malloc(sizeof(ListNode));
+// 			node->item = cur->item;
+// 			node->next = NULL;
+// 				if (cur->item % 2 == 1){
+// 					if (temp.head == NULL) {        // 첫 노드
+// 						temp.head = node;
+// 						tmp_tail = node;
+// 					} else {                       // 그 이후는 tail 뒤에 O(1)로 붙임
+// 						tmp_tail->next = node;
+// 						tmp_tail = node;
+// 					}
+// 					temp.size++;
+// 				}
+// 			cur = cur->next;
 ///////////////////////////////////////////////////////////////////////////////////
 
 void printList(LinkedList *ll){
