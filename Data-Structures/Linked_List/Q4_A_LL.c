@@ -86,7 +86,79 @@ int main()
 
 void moveEvenItemsToBack(LinkedList *ll)
 {
-	/* add your code here */
+	LinkedList temp;
+
+	temp.size = 0;
+	temp.head = NULL;
+
+	for(int i = 0; i < ll->size; i++){
+		int n = findNode(ll, i)->item;
+
+		if(n % 2 == 0){
+			insertNode(&temp, temp.size, n);
+			removeNode(ll, i);
+        	i--; //인덱스 보정
+		}
+	}
+
+	if(ll->size == 0){
+		ll->size = temp.size;
+		ll->head = temp.head;
+	}else{
+		ListNode *cur = ll->head;
+
+		while(cur->next !=NULL){
+			cur = cur->next;
+		}
+		cur->next = temp.head;
+		ll->size += temp.size;
+	}
+}
+
+void moveEvenItemsToBack(LinkedList *ll)
+{
+    ListNode *cur  = ll->head;
+    ListNode *prev = NULL;
+    ListNode *next = NULL;
+
+	ListNode *even_head = NULL;
+	ListNode *even_tail = NULL;
+
+	while (cur != NULL){
+		next = cur->next;
+
+		if (cur->item % 2 == 0){
+			if(prev == NULL){
+				ll->head = next;
+			}else{
+				prev->next = next;
+			}
+			cur->next = NULL;
+		
+			if(even_head == NULL){
+				even_head = cur;
+				even_tail = cur;
+			}else{
+				even_tail->next = cur;
+				even_tail = cur;
+			}
+		}
+		else{
+			prev = cur;
+		}
+
+		cur = next;
+	}
+
+	// even가 있으면 뒤에 붙이기
+    if (even_head != NULL) {
+        if (prev == NULL){
+			ll->head = even_head;   // 전부 짝수였던 경우
+		}
+        else{
+			prev->next = even_head; // 마지막 짝수 뒤에 even 체인 연결
+		}
+    }
 }
 
 ///////////////////////////////////////////////////////////////////////////////////
