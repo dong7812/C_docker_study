@@ -36,7 +36,7 @@ int insertNode(LinkedList *ll, int index, int value);
 int removeNode(LinkedList *ll, int index);
 
 //////////////////////////// main() //////////////////////////////////////////////
-
+#ifndef UNIT_TEST
 int main()
 {
 	LinkedList ll;
@@ -81,39 +81,39 @@ int main()
 	}
 	return 0;
 }
-
+#endif
 //////////////////////////////////////////////////////////////////////////////////
 
-void moveEvenItemsToBack(LinkedList *ll)
-{
-	LinkedList temp;
+// void moveEvenItemsToBack(LinkedList *ll)
+// {
+// 	LinkedList temp;
 
-	temp.size = 0;
-	temp.head = NULL;
+// 	temp.size = 0;
+// 	temp.head = NULL;
 
-	for(int i = 0; i < ll->size; i++){
-		int n = findNode(ll, i)->item;
+// 	for(int i = 0; i < ll->size; i++){
+// 		int n = findNode(ll, i)->item;
 
-		if(n % 2 == 0){
-			insertNode(&temp, temp.size, n);
-			removeNode(ll, i);
-        	i--; //인덱스 보정
-		}
-	}
+// 		if(n % 2 == 0){
+// 			insertNode(&temp, temp.size, n);
+// 			removeNode(ll, i);
+//         	i--; //인덱스 보정
+// 		}
+// 	}
 
-	if(ll->size == 0){
-		ll->size = temp.size;
-		ll->head = temp.head;
-	}else{
-		ListNode *cur = ll->head;
+// 	if(ll->size == 0){
+// 		ll->size = temp.size;
+// 		ll->head = temp.head;
+// 	}else{
+// 		ListNode *cur = ll->head;
 
-		while(cur->next !=NULL){
-			cur = cur->next;
-		}
-		cur->next = temp.head;
-		ll->size += temp.size;
-	}
-}
+// 		while(cur->next !=NULL){
+// 			cur = cur->next;
+// 		}
+// 		cur->next = temp.head;
+// 		ll->size += temp.size;
+// 	}
+// }
 
 void moveEvenItemsToBack(LinkedList *ll)
 {

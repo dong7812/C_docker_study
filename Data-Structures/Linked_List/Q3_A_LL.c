@@ -36,7 +36,7 @@ int insertNode(LinkedList *ll, int index, int value);
 int removeNode(LinkedList *ll, int index);
 
 //////////////////////////// main() //////////////////////////////////////////////
-
+#ifndef UNIT_TEST
 int main()
 {
 	LinkedList ll;
@@ -81,7 +81,7 @@ int main()
 	}
 	return 0;
 }
-
+#endif
 //////////////////////////////////////////////////////////////////////////////////
 
 void moveOddItemsToBack(LinkedList *ll)

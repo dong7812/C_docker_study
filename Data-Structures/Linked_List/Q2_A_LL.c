@@ -38,6 +38,7 @@ int removeNode(LinkedList *ll, int index);
 
 //////////////////////////// main() //////////////////////////////////////////////
 
+#ifndef UNIT_TEST
 int main()
 {
 	LinkedList ll1, ll2;
@@ -98,6 +99,7 @@ int main()
 	}
 	return 0;
 }
+#endif
 
 void alternateMergeLinkedList(LinkedList *ll1, LinkedList *ll2)
 {
