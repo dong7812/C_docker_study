@@ -99,11 +99,19 @@ int main()
 //////////////////////////////////////////////////////////////////////////////////
 
 int countOneChildNodes(BTNode *node)
-
 {
-    /* add your code here */
-}
+    if (node == NULL)
+        return 0;
 
+    // 현재 바라보고 있느 node가 마지막 leaf 노드인지 아닌지 확인 
+    // node의 left or right가 존재하면 마지막 노드가 아님
+    if ((node->left != NULL && node->right == NULL) || (node->left == NULL && node->right != NULL))
+    {
+        return 1 + countOneChildNodes(node->left) + countOneChildNodes(node->right);
+    }
+
+    return countOneChildNodes(node->left) + countOneChildNodes(node->right);
+}
 ///////////////////////////////////////////////////////////////////////////////////
 
 BTNode *createBTNode(int item)
