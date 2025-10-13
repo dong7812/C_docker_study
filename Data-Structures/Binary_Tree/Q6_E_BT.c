@@ -105,7 +105,17 @@ int main()
 
 void printSmallerValues(BTNode *node, int m)
 {
-	/* add your code here */
+	if(node == NULL){
+        return;
+    }
+
+    // preoder와 같이 진행하면서 m보다 작은 값을 구함
+    if(node->item < m){
+        printf("%d ", node->item);
+    }
+    
+    printSmallerValues(node->left, m);
+    printSmallerValues(node->right, m);
 }
 
 //////////////////////////////////////////////////////////////////////////////////
