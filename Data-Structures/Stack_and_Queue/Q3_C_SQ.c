@@ -128,6 +128,7 @@ int isStackPairwiseConsecutive(Stack *s)
 			cnt ++;
 		}else{
 			result = 0;
+			break;
 		}
 		push(&temp, second);
 		push(&temp, first);

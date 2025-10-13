@@ -88,10 +88,16 @@ int main()
 }
 
 //////////////////////////////////////////////////////////////////////////////////
-
+// 후위 순회
 void postOrderIterativeS1(BSTNode *root)
 {
-	 /* add your code here */
+	if(root == NULL){
+		return;
+	}
+
+	postOrderIterativeS1(root->left);
+	postOrderIterativeS1(root->right);
+	print("%d ", root->item);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
