@@ -102,7 +102,21 @@ int main()
 
 int smallestValue(BTNode *node)
 {
-	/* add your code here */
+	if(node == NULL){
+        return __INT16_MAX__;
+    }
+
+    // binary tree의 마지막 leaf는 일단 작은 수들(후보 줄이기)
+    if(node->left == NULL && node->right == NULL){
+        return node->item;
+    }
+    
+    return min(smallestValue(node->left), smallestValue(node->right));
+}
+
+// math head 호출 대신 util 설정
+int min(int a, int b) {
+    return (a < b) ? a : b;
 }
 
 //////////////////////////////////////////////////////////////////////////////////
