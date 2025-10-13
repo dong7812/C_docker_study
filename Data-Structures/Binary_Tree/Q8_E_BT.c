@@ -102,7 +102,19 @@ int main()
 
 int hasGreatGrandchild(BTNode *node)
 {
-	/* add your code here */
+	if (node == NULL){
+        return -1;
+    }
+
+    int left = hasGreatGrandchild(node->left);
+    int right = hasGreatGrandchild(node->right);
+
+    // 증손자 (현재 노드에서 깊이 3인 자식 노드가 있는 경우)
+    if(((left > right ? left : right)) >= 3){
+        printf("%d ", node->item);
+    }
+
+    return (left > right ? left : right) + 1;
 }
 
 //////////////////////////////////////////////////////////////////////////////////
