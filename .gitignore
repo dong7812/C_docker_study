@@ -1,0 +1,8 @@
+# macOS
+.DS_Store
+
+# C build files
+*.o
+*.out
+*.exe
+a.out
