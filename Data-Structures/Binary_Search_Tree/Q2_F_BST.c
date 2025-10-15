@@ -87,10 +87,30 @@ int main()
 }
 
 //////////////////////////////////////////////////////////////////////////////////
-
+// 중위 순회
 void inOrderTraversal(BSTNode *root)
 {
-	 /* add your code here */
+	if(root == NULL){
+		return;
+	}
+
+	Stack temp;
+
+	temp.top = NULL;
+
+	BSTNode *find;
+	find->left = NULL;
+	find->right = NULL;
+	find->item = NULL;
+
+	while(temp.top != NULL){
+		push(&temp, root->left);
+
+		if(root->left == NULL){
+			find = pop(&temp);
+			print("%d ", find->item);
+		}
+	}
 }
 
 ///////////////////////////////////////////////////////////////////////////////

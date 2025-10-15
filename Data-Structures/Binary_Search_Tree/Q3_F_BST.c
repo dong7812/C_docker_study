@@ -88,10 +88,16 @@ int main()
 }
 
 //////////////////////////////////////////////////////////////////////////////////
-
+// 전위 순회
 void preOrderIterative(BSTNode *root)
 {
-	 /* add your code here */
+	if(root == NULL){
+		return;
+	}
+
+	print("%d ", root->item);
+	preOrderIterative(root->left);
+	preOrderIterative(root->right);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
