@@ -91,13 +91,37 @@ int main()
 // 후위 순회
 void postOrderIterativeS1(BSTNode *root)
 {
-	if(root == NULL){
+		if(root == NULL){
 		return;
 	}
 
-	postOrderIterativeS1(root->left);
-	postOrderIterativeS1(root->right);
-	print("%d ", root->item);
+	Stack temp;
+	temp.top = NULL;
+
+	BSTNode *cur = root;
+
+	// 마지막으로 확인한 node를 저장
+	BSTNode *lastVisited = NULL;
+
+	// 아직 처리할 node가 남았는지에 대한 loop
+	while(cur != NULL || !isEmpty(&temp)){
+		if(cur != NULL){
+			push(&temp, cur);
+        	cur = cur->left;
+		}else{
+			// pop하지 않고 보기
+			BSTNode *peekNode = peek(&temp);
+
+        	if (peekNode->right != NULL && lastVisited != peekNode->right) {
+            	// 아직 오른쪽 안 갔으면 오른쪽으로
+				cur = peekNode->right;
+        	} else {
+				// 이제 루트 출력
+            	printf("%d ", peekNode->item);
+            	lastVisited = pop(&temp);
+        	}
+		}
+	}
 }
 
 ///////////////////////////////////////////////////////////////////////////////

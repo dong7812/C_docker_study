@@ -89,15 +89,30 @@ int main()
 
 //////////////////////////////////////////////////////////////////////////////////
 // 전위 순회
-void preOrderIterative(BSTNode *root)
-{
-	if(root == NULL){
-		return;
-	}
+void insertBSTNode(BSTNode **node, int value){
+	if (*node == NULL)
+	{
+		*node = malloc(sizeof(BSTNode));
 
-	print("%d ", root->item);
-	preOrderIterative(root->left);
-	preOrderIterative(root->right);
+		if (*node != NULL) {
+			(*node)->item = value;
+			(*node)->left = NULL;
+			(*node)->right = NULL;
+		}
+	}
+	else
+	{
+		if (value < (*node)->item)
+		{
+			insertBSTNode(&((*node)->left), value);
+		}
+		else if (value >(*node)->item)
+		{
+			insertBSTNode(&((*node)->right), value);
+		}
+		else
+			return;
+	}
 }
 
 ///////////////////////////////////////////////////////////////////////////////
